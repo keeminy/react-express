@@ -1,29 +1,20 @@
 import express, { Request, Response } from "express";
 
-import { getUsers, login } from "../services/user.service.ts";
+import { getUsers, transTest } from "../services/user.service.ts";
 
 export const userRouter = express.Router();
 
-userRouter.get("/api/sign/login", async (req: Request, res: Response) => {
-  console.log("req", req.body);
-  const userId: string = req.body.userId;
-  const userPwd: string = req.body.userPwd;
-
+userRouter.get("/api/users", async (req: Request, res: Response) => {
   try {
-    const result: any = await login(userId, userPwd);
+    const result: any = await getUsers();
     if (result.rowCount > 0) {
       res.status(200).send({
         success: true,
         result: result.rows,
       });
-    } else {
-      res.status(400).send({
-        success: false,
-        message: "Resource Null",
-      });
     }
   } catch (err) {
-    console.error("get /api/sign/login", err);
+    console.error("get /api/users", err);
     res.status(500).send({
       success: false,
       message: "Server Error",
@@ -31,9 +22,11 @@ userRouter.get("/api/sign/login", async (req: Request, res: Response) => {
   }
 });
 
-userRouter.get("/api/users", async (req: Request, res: Response) => {
+userRouter.post("/api/users", async (req: Request, res: Response) => {
   try {
-    const result: any = await getUsers();
+    const result: any = await transTest();
+    console.log("result", result);
+
     if (result.rowCount > 0) {
       res.status(200).send({
         success: true,
