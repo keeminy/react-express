@@ -1,12 +1,12 @@
 import { connection } from "../config/connection.ts";
+import { userListSql } from "../sql/user.sql.ts";
 
 export const getUsers = async () => {
   const conn = await connection.connect();
-  const sql = "select * from wcs_standard.md_user";
 
   try {
     return new Promise((resolve, rejects) => {
-      conn.query(sql, (err, res) => {
+      conn.query(userListSql, (err, res) => {
         if (err) {
           rejects(err);
         }
@@ -25,11 +25,11 @@ export const transTest = async () => {
     await conn.query("BEGIN");
 
     await conn.query(
-      "insert into wcs_standard.md_user ( user_id, user_password) values ( 'test1', 'test1' );"
+      "insert into md_user ( user_id, user_password) values ( 'test1', 'test1' );"
     );
 
     await conn.query(
-      "insert into wcs_standard.md_user ( user_id, user_pwd) values ( 'test2', 'test2' );"
+      "insert into md_user ( user_id, user_pwd) values ( 'test2', 'test2' );"
     );
 
     await conn.query("COMMIT");

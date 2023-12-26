@@ -2,7 +2,6 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import path from "path";
 
-import { signRouter } from "./controller/sign.controller.ts";
 import { userRouter } from "./controller/user.controller.ts";
 
 const __dirname = path.resolve();
@@ -17,7 +16,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "dist/")));
 
-app.use(signRouter);
 app.use(userRouter);
 
 // simple route
